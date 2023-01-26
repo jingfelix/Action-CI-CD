@@ -1,0 +1,32 @@
+name: build&deploy
+on:
+  push:
+    branches: [main]
+  commit:
+    branches: [main]
+  workflow_dispatch:
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        ref: main
+
+    - name: build
+      env:
+        REPO_NAME: ${{ github.repository }}
+      run: |
+        sh build.sh
+
+    - name: add to main branch
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: ${{ github.actor }}
+        branch: main
+        message: ${{ steps.current-time.outputs.time }} build
+      env:
+        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
