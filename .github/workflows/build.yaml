@@ -2,8 +2,6 @@ name: build&deploy
 on:
   push:
     branches: [main]
-  commit:
-    branches: [main]
   workflow_dispatch:
 
 jobs: 
